@@ -48,7 +48,7 @@ export default class ImageEditing extends Plugin {
 			isObject: true,
 			isBlock: true,
 			allowWhere: '$block',
-			allowAttributes: [ 'alt', 'src', 'srcset' ]
+			allowAttributes: [ 'alt', 'src', 'srcset', 'width', 'height' ]
 		} );
 
 		conversion.for( 'dataDowncast' ).add( downcastElementToElement( {
@@ -64,6 +64,8 @@ export default class ImageEditing extends Plugin {
 		conversion.for( 'downcast' )
 			.add( modelToViewAttributeConverter( 'src' ) )
 			.add( modelToViewAttributeConverter( 'alt' ) )
+			.add( modelToViewAttributeConverter( 'width' ) )
+			.add( modelToViewAttributeConverter( 'height' ) )
 			.add( srcsetAttributeConverter() );
 
 		conversion.for( 'upcast' )
@@ -82,6 +84,20 @@ export default class ImageEditing extends Plugin {
 					key: 'alt'
 				},
 				model: 'alt'
+			} ) )
+			.add( upcastAttributeToAttribute( {
+				view: {
+					name: 'img',
+					key: 'width'
+				},
+				model: 'width'
+			} ) )
+			.add( upcastAttributeToAttribute( {
+				view: {
+					name: 'img',
+					key: 'height'
+				},
+				model: 'height'
 			} ) )
 			.add( upcastAttributeToAttribute( {
 				view: {
